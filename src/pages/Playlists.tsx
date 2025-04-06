@@ -36,7 +36,13 @@ function Playlists() {
               style={{
                 backgroundImage:
                   "url(" +
-                  playlist.attributes?.artwork?.url +
+                  (playlist.attributes?.artwork != undefined
+                    ? MusicKit.formatArtworkURL(
+                        playlist.attributes?.artwork!,
+                        200,
+                        200
+                      )
+                    : "") +
                   "), url(https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/200x200bb.jpeg)",
               }}
             >

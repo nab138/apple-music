@@ -8,6 +8,8 @@
   background-color: var(--secondary-background-color);
   border-top: var(--border);
   justify-content: start;
+  align-items: center;
+  gap: var(--small-padding);
   text-align: left;
   height: 80px;
   z-index: 1;

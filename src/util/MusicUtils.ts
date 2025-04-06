@@ -11,6 +11,11 @@ export async function getPlaylists() {
   return playlists;
 }
 
+export function getNowPlaying() {
+  const music = MusicKit.getInstance();
+  return (music as any).nowPlayingItem as MusicKit.MediaItem | undefined;
+}
+
 export function setShuffleEnabled(enabled: boolean) {
   const music = MusicKit.getInstance();
   (music as any).shuffleMode = enabled
