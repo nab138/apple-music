@@ -1,0 +1,19 @@
+#root {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.card {
+  padding: var(--small-padding);
+  border-radius: var(--border-radius);
+  border: var(--border);
+  display: flex;
+  flex-wrap: wrap;
+}

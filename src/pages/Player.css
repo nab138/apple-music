@@ -1,0 +1,45 @@
+.playlists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  justify-content: center;
+}
+
+.playlists .playlist-card {
+  width: 200px;
+  height: 250px;
+  padding: var(--small-padding);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.playlist-card div {
+  border-radius: var(--border-radius);
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  display: flex;
+  justify-content: start;
+  gap: 5px;
+  padding: var(--small-padding);
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: end;
+}
+
+.playlist-card div button {
+  opacity: 0;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.playlist-card div:hover button {
+  opacity: 1;
+}
