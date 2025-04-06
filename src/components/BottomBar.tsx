@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./BottomBar.css";
 import { getNowPlaying } from "../util/MusicUtils";
-import { FaPause, FaPlay } from "react-icons/fa";
+import { FaFastForward, FaPause, FaPlay } from "react-icons/fa";
 
 function BottomBar() {
   const [nowPlaying, setNowPlaying] = useState<MusicKit.MediaItem | null>(null);
@@ -66,6 +66,14 @@ function BottomBar() {
               }}
             >
               {paused ? <FaPlay /> : <FaPause />}
+            </button>
+            <button
+              onClick={async () => {
+                const music = MusicKit.getInstance();
+                music.skipToNextItem();
+              }}
+            >
+              <FaFastForward />
             </button>
           </div>
         </>

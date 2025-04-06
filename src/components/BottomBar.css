@@ -19,4 +19,15 @@
   display: flex;
   gap: var(--small-padding);
   align-items: center;
+  padding-left: var(--padding);
+}
+
+.controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none !important;
 }
