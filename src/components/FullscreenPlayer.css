@@ -40,8 +40,8 @@
 }
 
 .fullscreen-art {
-  width: 50vh;
-  height: 50vh;
+  width: min(50vh, 40vw);
+  height: min(50vh, 40vw);
   background-size: cover;
 }
 

@@ -8,6 +8,7 @@ import ShuffleButton from "./MediaButtons/ShuffleButton";
 import SkipButton from "./MediaButtons/SkipButton";
 import useLyrics from "../util/useLyrics";
 import { useEffect, useRef } from "react";
+import ProgressBar from "./ProgressBar";
 
 const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
   const { nowPlaying } = useMusic();
@@ -22,7 +23,7 @@ const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
       interval = setInterval(() => {
         if (music.playbackState === MusicKit.PlaybackStates.playing) {
           const currentTime = (music as any).currentPlaybackTime;
-          let currentLine = 0;
+          let currentLine = null;
           for (let i = lyrics.length - 1; i >= 0; i--) {
             const line = lyrics[i];
             if (line.startTime == undefined) continue;
@@ -93,11 +94,12 @@ const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
               {nowPlaying?.artistName} — {nowPlaying?.albumName}
             </p>
           )}
-          <div className="fullscreen-controls">
+          <div className="fullscreen-controls" style={{ marginTop: "50px" }}>
             <RewindButton />
             <PlayButton />
             <SkipButton />
           </div>
+          <ProgressBar />
           <div className="fullscreen-controls">
             <ShuffleButton />
           </div>
@@ -106,7 +108,17 @@ const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
           <div className="lyrics" ref={lyricsContainer}>
             <ul>
               {lyrics?.map((line, index) => (
-                <li key={index}>{line.text}</li>
+                <li
+                  key={index}
+                  onClick={() => {
+                    const music = MusicKit.getInstance();
+                    if (line.startTime) {
+                      music.seekToTime(line.startTime);
+                    }
+                  }}
+                >
+                  {line.text}
+                </li>
               ))}
             </ul>
           </div>
