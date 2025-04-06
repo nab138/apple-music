@@ -13,7 +13,7 @@
       data-web-components
       async
     ></script>
-    <script>
+    <script type="module">
       const loadMusicKit = async () => {
         try {
           await MusicKit.configure({
@@ -26,7 +26,7 @@
             bitrate: MusicKit.PlaybackBitrate.HIGH,
           });
 
-          const modules = import.meta.glob('./src/main.tsx');
+          const modules = import.meta.glob("./src/main.tsx");
           const modulePath = Object.keys(modules)[0];
           if (modulePath) {
             const module = await modules[modulePath]();
@@ -35,7 +35,9 @@
           console.error(err);
         }
       };
-      document.addEventListener("musickitloaded", loadMusicKit);
+      if (MusicKit == undefined)
+        document.addEventListener("musickitloaded", loadMusicKit);
+      else loadMusicKit();
     </script>
   </body>
 </html>
