@@ -1,0 +1,33 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  background-color: var(--secondary-background-color);
+  width: 280px;
+  justify-content: start;
+  text-align: left;
+}
+
+.sidebar .header {
+  padding: var(--padding);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  list-style: none;
+  padding: var(--small-padding) var(--padding);
+  margin: 0;
+}
+
+.sidebar li:hover {
+  background-color: var(--background-color);
+}

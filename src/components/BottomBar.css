@@ -1,0 +1,14 @@
+.bottombar {
+  display: flex;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  background-color: var(--secondary-background-color);
+  border-top: var(--border);
+  justify-content: start;
+  text-align: left;
+  height: 80px;
+  z-index: 1;
+}

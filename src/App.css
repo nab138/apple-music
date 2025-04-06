@@ -4,6 +4,7 @@
   text-align: center;
 }
 
+h1,
 h2,
 h3,
 p {
@@ -16,4 +17,17 @@ p {
   border: var(--border);
   display: flex;
   flex-wrap: wrap;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 280px;
+  right: 0;
+  bottom: 80px;
+  overflow: hidden;
+  padding: var(--small-padding) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
 }

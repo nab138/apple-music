@@ -1,4 +1,4 @@
-import "./Player.css";
+import "./Playlists.css";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import { getPlaylists, setShuffleEnabled } from "../util/MusicUtils";
 import { FaPlay } from "react-icons/fa";
 import { FaShuffle } from "react-icons/fa6";
 
-function Player() {
+function Playlists() {
   const music = MusicKit.getInstance();
   const navigate = useNavigate();
   const [playlists, setPlaylists] = useState<MusicKit.LibraryPlaylists[]>([]);
@@ -68,4 +68,4 @@ function Player() {
   );
 }
 
-export default Player;
+export default Playlists;
