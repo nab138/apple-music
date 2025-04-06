@@ -29,6 +29,10 @@
   width: 100%;
 }
 
+.fullscreen-art {
+  border-radius: 10px;
+}
+
 .close-btn {
   position: absolute;
   top: 0;
