@@ -11,10 +11,13 @@ function ProgressBar() {
     let interval: any = null;
     if (nowPlaying) {
       const music = MusicKit.getInstance();
-      const updateInterval = 100;
+      const updateInterval = 50;
       interval = setInterval(() => {
         if (music.playbackState === MusicKit.PlaybackStates.playing) {
-          setProgress((music as any).currentPlaybackProgress);
+          setProgress(
+            (music as any).currentPlaybackTime /
+              (music as any).currentPlaybackDuration
+          );
         }
       }, updateInterval);
     }
