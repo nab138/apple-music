@@ -42,11 +42,13 @@ const lyricsClient = new Client();
 
 export async function getLyrics(
   songName: string,
-  artistName: string
+  artistName: string,
+  albumName: string
 ): Promise<LyricLine[] | null> {
   const query = {
     track_name: songName,
     artist_name: artistName,
+    album_name: albumName,
   };
   try {
     return (

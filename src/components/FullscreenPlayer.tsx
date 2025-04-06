@@ -17,21 +17,37 @@ const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
 
   useEffect(() => {
     let interval: any = null;
+    let lastKnownTime = 0;
+    let lastUpdateTimestamp = 0;
+
     if (nowPlaying && lyrics && !loading) {
       const music = MusicKit.getInstance();
-      const updateInterval = 10;
+      const updateInterval = 10; // Update every 10ms for smoother accuracy
+
       interval = setInterval(() => {
         if (music.playbackState === MusicKit.PlaybackStates.playing) {
-          const currentTime = (music as any).currentPlaybackTime;
+          const currentTimestamp = performance.now();
+
+          // Calculate the interpolated playback time
+          if (lastUpdateTimestamp) {
+            const elapsedTime = (currentTimestamp - lastUpdateTimestamp) / 1000; // Convert ms to seconds
+            lastKnownTime += elapsedTime;
+          } else {
+            lastKnownTime = (music as any).currentPlaybackTime;
+          }
+
+          lastUpdateTimestamp = currentTimestamp;
+
           let currentLine = null;
           for (let i = lyrics.length - 1; i >= 0; i--) {
             const line = lyrics[i];
             if (line.startTime == undefined) continue;
-            if (line.startTime <= currentTime) {
+            if (line.startTime <= lastKnownTime) {
               currentLine = i;
               break;
             }
           }
+
           if (currentLine !== undefined && currentLine != null) {
             const lineElement = (
               lyricsContainer.current?.children[0] as HTMLUListElement
@@ -46,6 +62,7 @@ const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
                 top: lyricsContainer.current.scrollTop + offset,
                 behavior: "smooth",
               });
+
               // Highlight the current line
               for (
                 let i = 0;
@@ -61,9 +78,13 @@ const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
               lineElement.classList.add("highlight");
             }
           }
+        } else {
+          // Reset timestamps when playback is paused or stopped
+          lastUpdateTimestamp = 0;
         }
       }, updateInterval);
     }
+
     return () => {
       if (interval) {
         clearInterval(interval);

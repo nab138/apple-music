@@ -18,7 +18,8 @@ function useLyrics() {
       }
       const lyricsData = await getLyrics(
         nowPlaying?.title,
-        nowPlaying?.artistName
+        nowPlaying?.artistName,
+        nowPlaying?.albumName
       );
       setLyrics(lyricsData);
       setLoading(false);
