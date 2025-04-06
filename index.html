@@ -25,10 +25,8 @@
             },
             bitrate: MusicKit.PlaybackBitrate.HIGH,
           });
-          const script = document.createElement("script");
-          script.type = "module";
-          script.src = "/src/main.tsx";
-          document.body.appendChild(script);
+
+          import("/src/main.tsx");
         } catch (err) {
           console.error(err);
         }
