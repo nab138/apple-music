@@ -15,7 +15,6 @@ function ProgressBar() {
       interval = setInterval(() => {
         if (music.playbackState === MusicKit.PlaybackStates.playing) {
           setProgress((music as any).currentPlaybackProgress);
-          console.log((music as any).currentPlaybackProgress);
         }
       }, updateInterval);
     }
