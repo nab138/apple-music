@@ -26,7 +26,11 @@
             bitrate: MusicKit.PlaybackBitrate.HIGH,
           });
 
-          import("./src/main.tsx");
+          const modules = import.meta.glob('./src/main.tsx');
+          const modulePath = Object.keys(modules)[0];
+          if (modulePath) {
+            const module = await modules[modulePath]();
+          }
         } catch (err) {
           console.error(err);
         }
