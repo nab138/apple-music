@@ -35,9 +35,12 @@
           console.error(err);
         }
       };
-      if (MusicKit == undefined)
+      if (typeof MusicKit !== "undefined") {
+        loadMusicKit();
+      } else {
+        // Otherwise, wait for the musickitloaded event
         document.addEventListener("musickitloaded", loadMusicKit);
-      else loadMusicKit();
+      }
     </script>
   </body>
 </html>
