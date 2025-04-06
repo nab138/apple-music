@@ -96,8 +96,20 @@ function Playlist() {
       </div>
       {!loading && (
         <ul className="playlist-songs">
-          {playlistSongs.map((song) => (
-            <li key={song.id} className="playlist-song">
+          {playlistSongs.map((song, i) => (
+            <li
+              key={song.id}
+              className="playlist-song"
+              onClick={async () => {
+                if (!song.attributes) return;
+
+                setShuffleEnabled(false);
+                await music.setQueue({
+                  playlist: playlist.id,
+                });
+                await music.changeToMediaAtIndex(i);
+              }}
+            >
               {song.attributes?.name}
             </li>
           ))}

@@ -11,4 +11,13 @@
   list-style: none;
   margin: 0;
   text-align: left;
+  padding: 0;
+}
+
+.playlist-song {
+  padding: var(--small-padding) var(--padding);
+}
+
+.playlist-song:hover {
+  background-color: var(--secondary-background-color);
 }

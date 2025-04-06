@@ -5,6 +5,7 @@ interface MusicContextValue {
   playlists: MusicKit.LibraryPlaylists[];
   nowPlaying: MusicKit.MediaItem | null;
   paused: boolean;
+  shuffleEnabled: boolean;
 }
 
 const MusicContext = createContext<MusicContextValue | undefined>(undefined);
@@ -15,6 +16,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
   const [playlists, setPlaylists] = useState<MusicKit.LibraryPlaylists[]>([]);
   const [nowPlaying, setNowPlaying] = useState<MusicKit.MediaItem | null>(null);
   const [paused, setPaused] = useState<boolean>(false);
+  const [shuffleEnabled, setShuffleEnabled] = useState<boolean>(false);
 
   useEffect(() => {
     const music = MusicKit.getInstance();
@@ -34,6 +36,13 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
       setPaused(music.playbackState !== MusicKit.PlaybackStates.playing);
     };
 
+    const handleShuffleChange = () => {
+      const shuffleMode = (music as any).shuffleMode;
+      setShuffleEnabled(
+        shuffleMode === (MusicKit as any).PlayerShuffleMode.songs
+      );
+    };
+
     fetchPlaylists();
     handlePlaybackStateChange();
 
@@ -42,6 +51,10 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
     music.addEventListener(
       "nowPlayingItemDidChange" as keyof MusicKit.Events,
       handlePlaybackStateChange
+    );
+    music.addEventListener(
+      "shuffleModeDidChange" as keyof MusicKit.Events,
+      handleShuffleChange
     );
 
     return () => {
@@ -54,11 +67,17 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
         "nowPlayingItemDidChange" as keyof MusicKit.Events,
         handlePlaybackStateChange
       );
+      music.removeEventListener(
+        "shuffleModeDidChange" as keyof MusicKit.Events,
+        handleShuffleChange
+      );
     };
   }, []);
 
   return (
-    <MusicContext.Provider value={{ playlists, nowPlaying, paused }}>
+    <MusicContext.Provider
+      value={{ playlists, nowPlaying, paused, shuffleEnabled }}
+    >
       {children}
     </MusicContext.Provider>
   );

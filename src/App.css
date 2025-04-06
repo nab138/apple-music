@@ -25,7 +25,8 @@ p {
   left: 280px;
   right: 0;
   bottom: 80px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: var(--padding) 0;
   display: flex;
   flex-direction: column;

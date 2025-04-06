@@ -35,3 +35,26 @@ export async function getPlaylistSongs(id: string) {
 
   return songs as MusicKit.Songs[];
 }
+
+import { Client, LyricLine } from "lrclib-api";
+
+const lyricsClient = new Client();
+
+export async function getLyrics(
+  songName: string,
+  artistName: string
+): Promise<LyricLine[] | null> {
+  const query = {
+    track_name: songName,
+    artist_name: artistName,
+  };
+  try {
+    return (
+      (await lyricsClient.getSynced(query)) ??
+      (await lyricsClient.getUnsynced(query))
+    );
+  } catch (error) {
+    console.error("Error fetching lyrics:", error);
+    return null;
+  }
+}

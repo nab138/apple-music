@@ -1,67 +1,57 @@
+import { useState } from "react";
 import { useMusic } from "../util/MusicContext";
 import "./BottomBar.css";
-import { FaFastForward, FaFastBackward, FaPause, FaPlay } from "react-icons/fa";
+import { SlSizeFullscreen } from "react-icons/sl";
+import FullscreenPlayer from "./FullscreenPlayer";
+import PlayButton from "./MediaButtons/PlayButton";
+import SkipButton from "./MediaButtons/SkipButton";
+import RewindButton from "./MediaButtons/RewindButton";
+import ShuffleButton from "./MediaButtons/ShuffleButton";
 
 function BottomBar() {
-  const { nowPlaying, paused } = useMusic();
+  const { nowPlaying } = useMusic();
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   return (
-    <div className={"bottombar"}>
-      <>
-        <div
-          className="artwork"
-          style={{
-            backgroundImage:
-              "url(" +
-              (nowPlaying?.artwork != undefined
-                ? MusicKit.formatArtworkURL(nowPlaying?.artwork!, 200, 200)
-                : "") +
-              "), url(https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/200x200bb.jpeg)",
-          }}
-        ></div>
-        <div>
-          <h3>{nowPlaying?.title ?? "Not Playing"}</h3>
-          {nowPlaying && (
-            <p>
-              {nowPlaying?.artistName} — {nowPlaying?.albumName}
-            </p>
-          )}
-        </div>
-        <div className="controls">
-          <button
-            disabled={nowPlaying == null}
-            onClick={async () => {
-              const music = MusicKit.getInstance();
-              music.skipToPreviousItem();
+    <>
+      <div className={"bottombar"}>
+        <>
+          <div
+            className="artwork"
+            style={{
+              backgroundImage:
+                "url(" +
+                (nowPlaying?.artwork != undefined
+                  ? MusicKit.formatArtworkURL(nowPlaying?.artwork!, 200, 200)
+                  : "") +
+                "), url(https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/200x200bb.jpeg)",
             }}
           >
-            <FaFastBackward />
-          </button>
-          <button
-            disabled={nowPlaying == null}
-            onClick={async () => {
-              const music = MusicKit.getInstance();
-              if (music.playbackState === MusicKit.PlaybackStates.playing) {
-                music.pause();
-              } else {
-                music.play();
-              }
-            }}
-          >
-            {paused ? <FaPlay /> : <FaPause />}
-          </button>
-          <button
-            disabled={nowPlaying == null}
-            onClick={async () => {
-              const music = MusicKit.getInstance();
-              music.skipToNextItem();
-            }}
-          >
-            <FaFastForward />
-          </button>
-        </div>
-      </>
-    </div>
+            <button
+              className="fullscreen-btn"
+              onClick={() => setFullscreen(true)}
+            >
+              <SlSizeFullscreen size={"100%"} />
+            </button>
+          </div>
+          <div>
+            <h3>{nowPlaying?.title ?? "Not Playing"}</h3>
+            {nowPlaying && (
+              <p>
+                {nowPlaying?.artistName} — {nowPlaying?.albumName}
+              </p>
+            )}
+          </div>
+          <div className="controls">
+            <RewindButton />
+            <PlayButton />
+            <SkipButton />
+            <ShuffleButton />
+          </div>
+        </>
+      </div>
+      {fullscreen && <FullscreenPlayer close={() => setFullscreen(false)} />}
+    </>
   );
 }
 
