@@ -13,7 +13,6 @@
       data-web-components
       async
     ></script>
-    <script type="module" src="/src/main.tsx"></script>
     <script>
       const loadMusicKit = async () => {
         try {
@@ -24,8 +23,12 @@
               name: "MusicKit Test",
               build: "0.0.1",
             },
+            bitrate: MusicKit.PlaybackBitrate.HIGH,
           });
-          MusicKit.getInstance().bitrate = MusicKit.PlaybackBitrate.HIGH;
+          const script = document.createElement("script");
+          script.type = "module";
+          script.src = "/src/main.tsx";
+          document.body.appendChild(script);
         } catch (err) {
           console.error(err);
         }

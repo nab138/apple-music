@@ -1,15 +1,7 @@
-import { useEffect, useState } from "react";
+import { useMusic } from "../util/MusicContext";
 
 function Home() {
-  const [authorized, setAuthorized] = useState(false);
-  useEffect(() => {
-    const music = MusicKit.getInstance();
-    if (music.isAuthorized) {
-      setAuthorized(true);
-    } else {
-      setAuthorized(false);
-    }
-  }, []);
+  const { isAuthorized } = useMusic();
   return (
     <div
       className="home"
@@ -24,28 +16,26 @@ function Home() {
       <h1 style={{ marginBottom: "25px" }}>
         Welcome to Apple Music Better Edition™
       </h1>
-      {!authorized && (
+      {!isAuthorized && (
         <div>
           <p>Log in to your apple account to get started</p>
           <button
             className="start-button"
             onClick={async () => {
               await MusicKit.getInstance().authorize();
-              setAuthorized(MusicKit.getInstance().isAuthorized);
             }}
           >
             Login
           </button>
         </div>
       )}
-      {authorized && (
+      {isAuthorized && (
         <div>
           <h3 style={{ marginBottom: "10px" }}>You are already logged in.</h3>
           <button
             className="start-button"
             onClick={async () => {
               await MusicKit.getInstance().unauthorize();
-              setAuthorized(MusicKit.getInstance().isAuthorized);
             }}
           >
             Logout

@@ -6,6 +6,7 @@ interface MusicContextValue {
   nowPlaying: MusicKit.MediaItem | null;
   paused: boolean;
   shuffleEnabled: boolean;
+  isAuthorized: boolean;
 }
 
 const MusicContext = createContext<MusicContextValue | undefined>(undefined);
@@ -17,11 +18,9 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
   const [nowPlaying, setNowPlaying] = useState<MusicKit.MediaItem | null>(null);
   const [paused, setPaused] = useState<boolean>(false);
   const [shuffleEnabled, setShuffleEnabled] = useState<boolean>(false);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
 
   useEffect(() => {
-    if(MusicKit == undefined || MusicKit.getInstance() == undefined){
-      return;
-    }
     const music = MusicKit.getInstance();
 
     const fetchPlaylists = async () => {
@@ -46,11 +45,21 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
       );
     };
 
+    const checkAuthorization = () => {
+      if (music.isAuthorized) {
+        setIsAuthorized(true);
+      } else {
+        setIsAuthorized(false);
+      }
+    };
+    checkAuthorization();
+
     fetchPlaylists();
     handlePlaybackStateChange();
 
     music.addEventListener("authorizationStatusDidChange", fetchPlaylists);
     music.addEventListener("playbackStateDidChange", handlePlaybackStateChange);
+    music.addEventListener("authorizationStatusDidChange", checkAuthorization);
     music.addEventListener(
       "nowPlayingItemDidChange" as keyof MusicKit.Events,
       handlePlaybackStateChange
@@ -74,12 +83,24 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
         "shuffleModeDidChange" as keyof MusicKit.Events,
         handleShuffleChange
       );
+      music.removeEventListener(
+        "authorizationStatusDidChange",
+        checkAuthorization
+      );
     };
   }, []);
 
   return (
     <MusicContext.Provider
-      value={{ playlists, nowPlaying, paused, shuffleEnabled }}
+      value={
+        {
+          playlists,
+          nowPlaying,
+          paused,
+          shuffleEnabled,
+          isAuthorized,
+        } as MusicContextValue
+      }
     >
       {children}
     </MusicContext.Provider>
