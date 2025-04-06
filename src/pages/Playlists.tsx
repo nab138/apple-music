@@ -1,30 +1,15 @@
 import "./Playlists.css";
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getPlaylists, setShuffleEnabled } from "../util/MusicUtils";
+import { setShuffleEnabled } from "../util/MusicUtils";
 import { FaPlay } from "react-icons/fa";
 import { FaShuffle } from "react-icons/fa6";
+import { useMusic } from "../util/MusicContext";
+import { useNavigate } from "react-router-dom";
 
 function Playlists() {
   const music = MusicKit.getInstance();
+  const { playlists } = useMusic();
   const navigate = useNavigate();
-  const [playlists, setPlaylists] = useState<MusicKit.LibraryPlaylists[]>([]);
-
-  useEffect(() => {
-    if (!music.isAuthorized) {
-      navigate("/");
-    }
-    const fetchPlaylists = async () => {
-      try {
-        const playlists = await getPlaylists();
-        setPlaylists(playlists);
-      } catch (error) {
-        console.error("Error fetching playlists:", error);
-      }
-    };
-    fetchPlaylists();
-  }, []);
 
   return (
     <>
@@ -33,7 +18,9 @@ function Playlists() {
         {playlists.map((playlist) => (
           <div key={playlist.id} className="playlist-card">
             <div
+              className="playlist-artwork"
               style={{
+                cursor: "pointer",
                 backgroundImage:
                   "url(" +
                   (playlist.attributes?.artwork != undefined
@@ -44,6 +31,9 @@ function Playlists() {
                       )
                     : "") +
                   "), url(https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/200x200bb.jpeg)",
+              }}
+              onClick={() => {
+                navigate("/playlist/" + playlist.id);
               }}
             >
               <button

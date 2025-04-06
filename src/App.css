@@ -31,3 +31,26 @@ p {
   flex-direction: column;
   gap: var(--gap);
 }
+
+.icon-text {
+  display: flex;
+  align-items: center;
+  gap: var(--small-padding);
+}
+
+.playlist-artwork {
+  border-radius: var(--border-radius);
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  display: flex;
+  justify-content: start;
+  gap: 5px;
+  padding: var(--small-padding);
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: end;
+}

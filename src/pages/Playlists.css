@@ -14,23 +14,6 @@
   justify-content: center;
 }
 
-.playlist-card div {
-  border-radius: var(--border-radius);
-  width: 200px;
-  height: 200px;
-  min-width: 200px;
-  min-height: 200px;
-  max-width: 200px;
-  max-height: 200px;
-  display: flex;
-  justify-content: start;
-  gap: 5px;
-  padding: var(--small-padding);
-  background-repeat: no-repeat;
-  background-size: cover;
-  align-items: end;
-}
-
 .playlist-card div button {
   opacity: 0;
   width: 40px;

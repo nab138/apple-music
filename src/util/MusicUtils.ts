@@ -22,3 +22,16 @@ export function setShuffleEnabled(enabled: boolean) {
     ? (MusicKit as any).PlayerShuffleMode.songs
     : (MusicKit as any).PlayerShuffleMode.off;
 }
+
+export async function getPlaylistSongs(id: string) {
+  const music = MusicKit.getInstance();
+  const queryParameters = { limit: 100 };
+  const {
+    data: { data: songs = [] },
+  } = (await music.api.music(
+    `/v1/me/library/playlists/${id}/tracks`,
+    queryParameters
+  )) as any;
+
+  return songs as MusicKit.Songs[];
+}

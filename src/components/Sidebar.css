@@ -4,16 +4,18 @@
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
+  bottom: 80px;
   overflow: hidden;
   background-color: var(--secondary-background-color);
   width: 280px;
   justify-content: start;
   text-align: left;
+  overflow-y: auto;
 }
 
 .sidebar .header {
   padding: var(--padding);
+  padding-bottom: 0;
 }
 
 .sidebar ul {
@@ -29,5 +31,16 @@
 }
 
 .sidebar li:hover {
+  background-color: var(--background-color);
+}
+
+.playlist-text {
+  /* cut off with ellipses instead of wraping */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar-active {
   background-color: var(--background-color);
 }
