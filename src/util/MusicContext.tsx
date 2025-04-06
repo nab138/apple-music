@@ -19,6 +19,9 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({
   const [shuffleEnabled, setShuffleEnabled] = useState<boolean>(false);
 
   useEffect(() => {
+    if(MusicKit == undefined || MusicKit.getInstance() == undefined){
+      return;
+    }
     const music = MusicKit.getInstance();
 
     const fetchPlaylists = async () => {
