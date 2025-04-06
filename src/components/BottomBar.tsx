@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
 import "./BottomBar.css";
 import { getNowPlaying } from "../util/MusicUtils";
+import { FaPause, FaPlay } from "react-icons/fa";
 
 function BottomBar() {
   const [nowPlaying, setNowPlaying] = useState<MusicKit.MediaItem | null>(null);
+  const [paused, setPaused] = useState<boolean>(false);
   useEffect(() => {
-    const musicKitInstance = MusicKit.getInstance();
+    const music = MusicKit.getInstance();
     const handlePlaybackStateChange = () => {
-      console.log("hi");
       const nowPlayingItem = getNowPlaying();
       if (nowPlayingItem) {
-        console.log("Now playing:", nowPlayingItem.title);
         setNowPlaying(nowPlayingItem);
       }
+      setPaused(music.playbackState !== MusicKit.PlaybackStates.playing);
     };
-    musicKitInstance.addEventListener(
-      "playbackStateDidChange",
+    music.addEventListener("playbackStateDidChange", handlePlaybackStateChange);
+    music.addEventListener(
+      "nowPlayingItemDidChange" as keyof MusicKit.Events,
       handlePlaybackStateChange
     );
     return () => {
-      musicKitInstance.removeEventListener(
+      music.removeEventListener(
         "playbackStateDidChange",
+        handlePlaybackStateChange
+      );
+      music.removeEventListener(
+        "nowPlayingItemDidChange" as keyof MusicKit.Events,
         handlePlaybackStateChange
       );
     };
@@ -47,6 +53,20 @@ function BottomBar() {
             <p>
               {nowPlaying?.artistName} — {nowPlaying?.albumName}
             </p>
+          </div>
+          <div className="controls">
+            <button
+              onClick={async () => {
+                const music = MusicKit.getInstance();
+                if (music.playbackState === MusicKit.PlaybackStates.playing) {
+                  music.pause();
+                } else {
+                  music.play();
+                }
+              }}
+            >
+              {paused ? <FaPlay /> : <FaPause />}
+            </button>
           </div>
         </>
       )}

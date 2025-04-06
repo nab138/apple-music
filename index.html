@@ -17,7 +17,7 @@
     <script>
       const loadMusicKit = async () => {
         try {
-          MusicKit.configure({
+          await MusicKit.configure({
             developerToken:
               "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlEzOE1TVTZEWUwifQ.eyJpYXQiOjE3NDI1NjgwMTAsImV4cCI6MTc1ODEyMDAxMCwiaXNzIjoiQkxISDVRN0xZWiJ9.8arRrRucTJiKVY7Bck6LERFNnDr8NLlPz7an_bETTUSCnsdoZyEpW8CWm2MY3WkLfu8oJ2FAg6STFCCJQV0lFQ",
             app: {
@@ -25,6 +25,7 @@
               build: "0.0.1",
             },
           });
+          MusicKit.getInstance().bitrate = MusicKit.PlaybackBitrate.HIGH;
         } catch (err) {
           console.error(err);
         }

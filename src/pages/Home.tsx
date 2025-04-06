@@ -11,7 +11,16 @@ function Home() {
     }
   }, []);
   return (
-    <div className="home">
+    <div
+      className="home"
+      style={{
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <h1 style={{ marginBottom: "25px" }}>
         Welcome to Apple Music Better Edition™
       </h1>
@@ -31,7 +40,7 @@ function Home() {
       )}
       {authorized && (
         <div>
-          <h3 style={{ marginBottom: "10px" }}>Welcome, user</h3>
+          <h3 style={{ marginBottom: "10px" }}>You are already logged in.</h3>
           <button
             className="start-button"
             onClick={async () => {

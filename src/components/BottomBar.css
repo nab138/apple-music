@@ -14,3 +14,9 @@
   height: 80px;
   z-index: 1;
 }
+
+.controls {
+  display: flex;
+  gap: var(--small-padding);
+  align-items: center;
+}
