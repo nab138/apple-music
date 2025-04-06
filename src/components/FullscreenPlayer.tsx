@@ -125,7 +125,7 @@ const FullscreenPlayer: React.FC<{ close: () => void }> = ({ close }) => {
             <ShuffleButton />
           </div>
         </div>
-        {!loading && (
+        {!loading && lyrics != null && lyrics.length > 0 && (
           <div className="lyrics" ref={lyricsContainer}>
             <ul>
               {lyrics?.map((line, index) => (
