@@ -43,20 +43,30 @@ const lyricsClient = new Client();
 export async function getLyrics(
   songName: string,
   artistName: string,
-  albumName: string
+  albumName: string,
+  noAlbum = false
 ): Promise<LyricLine[] | null> {
-  const query = {
-    track_name: songName,
-    artist_name: artistName,
-    album_name: albumName,
-  };
+  const query = noAlbum
+    ? {
+        track_name: songName,
+        artist_name: artistName,
+      }
+    : {
+        track_name: songName,
+        artist_name: artistName,
+        album_name: albumName,
+      };
   try {
-    return (
+    let lyrics =
       (await lyricsClient.getSynced(query)) ??
-      (await lyricsClient.getUnsynced(query))
-    );
+      (await lyricsClient.getUnsynced(query));
+    if (!lyrics && !noAlbum) {
+      return getLyrics(songName, artistName, "", true);
+    }
+    return lyrics;
   } catch (error) {
     console.error("Error fetching lyrics:", error);
+
     return null;
   }
 }
