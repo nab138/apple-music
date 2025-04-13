@@ -56,27 +56,3 @@
 .fullscreen-controls {
   display: flex;
 }
-
-.lyrics {
-  padding: var(--padding);
-  overflow: auto;
-  height: 80vh;
-  width: 50vw;
-}
-
-.lyrics ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  max-height: 100%;
-}
-.lyrics li {
-  padding: var(--small-padding) var(--padding);
-  margin: 0;
-  font-weight: bolder;
-  font-size: 2em;
-}
-
-.highlight {
-  color: var(--primary-color);
-}

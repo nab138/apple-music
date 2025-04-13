@@ -63,6 +63,7 @@ export async function getLyrics(
     if (!lyrics && !noAlbum) {
       return getLyrics(songName, artistName, "", true);
     }
+    //console.log("Fetched lyrics:", lyrics);
     return lyrics;
   } catch (error) {
     console.error("Error fetching lyrics:", error);
