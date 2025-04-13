@@ -115,6 +115,11 @@ function Lyrics() {
                     if (line.startTime) {
                       music.seekToTime(line.startTime);
                     }
+                    if (
+                      music.playbackState !== MusicKit.PlaybackStates.playing
+                    ) {
+                      music.play();
+                    }
                   }}
                 >
                   {line.text}
