@@ -6,6 +6,7 @@ import { FaShuffle } from "react-icons/fa6";
 import { useMusic } from "../util/MusicContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Song from "../components/Song";
 
 function Playlist() {
   const music = MusicKit.getInstance();
@@ -95,25 +96,16 @@ function Playlist() {
         </div>
       </div>
       {!loading && (
-        <ul className="playlist-songs">
+        <div className="playlist-songs">
           {playlistSongs.map((song, i) => (
-            <li
-              key={song.id}
-              className="playlist-song"
-              onClick={async () => {
-                if (!song.attributes) return;
-
-                setShuffleEnabled(false);
-                await music.setQueue({
-                  playlist: playlist.id,
-                });
-                await music.changeToMediaAtIndex(i);
-              }}
-            >
-              {song.attributes?.name}
-            </li>
+            <Song
+              song={song}
+              playlistId={playlist.id}
+              playlistIndex={i}
+              key={i}
+            />
           ))}
-        </ul>
+        </div>
       )}
     </>
   );

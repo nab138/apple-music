@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import Sidebar from "./components/Sidebar";
 import BottomBar from "./components/BottomBar";
 import Playlist from "./pages/Playlist";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/playlist/:id" element={<Playlist />} />
+          <Route path="/search/:term?" element={<Search />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

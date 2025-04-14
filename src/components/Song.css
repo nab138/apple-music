@@ -1,0 +1,29 @@
+.song {
+  padding: calc(var(--small-padding) / 2) var(--small-padding);
+  display: flex;
+  align-items: center;
+  gap: var(--small-padding);
+  border-radius: var(--border-radius);
+}
+
+.song:hover {
+  background-color: var(--secondary-background-color);
+}
+
+.song-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  max-height: 32px;
+}
+
+.song-info p {
+  margin: 0;
+  padding: 0;
+}
+
+.song-info-artist {
+  font-size: smaller !important;
+  opacity: 0.7;
+}

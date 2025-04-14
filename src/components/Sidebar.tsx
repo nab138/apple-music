@@ -1,6 +1,6 @@
 import "./Sidebar.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaSearch } from "react-icons/fa";
 import { PiPlaylistBold } from "react-icons/pi";
 import { useMusic } from "../util/MusicContext";
 import { BsGrid3X3Gap } from "react-icons/bs";
@@ -23,6 +23,14 @@ function Sidebar() {
           >
             <p className="icon-text">
               <FaHome /> Home
+            </p>
+          </li>
+          <li
+            onClick={() => navigate("/search")}
+            className={isActive("/search") ? "sidebar-active" : ""}
+          >
+            <p className="icon-text">
+              <FaSearch /> Search
             </p>
           </li>
         </ul>
